@@ -78,15 +78,7 @@ class CrossStoreTransfer[F[_]: ThrowableMonadError](sourceStore: Store[F],
 object CrossStoreTransfer extends IOApp {
   type ThrowableMonadError[F[_]] = MonadError[F, Throwable]
   override def run(args: List[String]): IO[ExitCode] = {
-    val from = Paths.get("source.txt")
-    val to = Paths.get("destination.txt")
-
     for {
-      _ <- IO.delay(from.toFile.createNewFile())
-      _ <- IO.delay(to.toFile.createNewFile())
-      buffer <- IO.delay(new BufferedWriter(new FileWriter(from.toFile)))
-      _ <- IO.delay(buffer.write("THIS IS MY TEXT"))
-      _ <- IO.delay(buffer.close())
       byteCounter <- Ref.of[IO, Long](0L)
       blocker = Blocker.liftExecutionContext(Implicits.global)
       source = new FileStore[IO](Paths.get(""), blocker)
