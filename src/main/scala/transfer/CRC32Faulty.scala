@@ -1,15 +1,11 @@
 package transfer
 
-package transfer
-
 import java.nio.file.Paths
 import java.util.concurrent.Executors
 import java.util.zip.CRC32
 
 import blobstore.fs.FileStore
 import blobstore.{Path, Store}
-import cats.data.Kleisli
-import cats.effect.concurrent.MVar
 import cats.effect.{Blocker, Concurrent, ExitCode, IO, IOApp}
 import cats.implicits._
 import fs2.Chunk

@@ -6,7 +6,6 @@ import java.util.zip.CRC32
 
 import blobstore.fs.FileStore
 import blobstore.{Path, Store}
-import cats.data.Kleisli
 import cats.effect.concurrent.MVar
 import cats.effect.{Blocker, Concurrent, ExitCode, IO, IOApp}
 import cats.implicits._
@@ -53,8 +52,6 @@ object Main extends IOApp {
       ExecutionContext.fromExecutor(Executors.newFixedThreadPool(1))
     val blocker = Blocker.liftExecutionContext(executionContext)
     val localStore = new FileStore[IO](Paths.get(""), blocker)
-
-    import blobstore.PathOps._
 
     new CRC32Calculator(localStore)
       .computeMD5(Path("Docker.dmg"))
